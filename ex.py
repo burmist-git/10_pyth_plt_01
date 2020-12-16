@@ -113,25 +113,35 @@ def generateHistData(nn,x0,sigma):
 @printinfo
 def plot_hist():
 
-    classType = [0,1,2,3]
-    nn    = [2000,10000,5000,5000]
-    x0    = [1,2,4,5]
-    sigma = [0.3,0.3,0.8,0.2]
-
+    classType = [0,1]
+    nn    = [10000,1000]
+    x0    = [10,11]
+    sigma = [0.1,0.1]
+    
+    '''
+    classType = [0,1,2,3,4]
+    nn    = [100,500,1000,5000,10000]
+    x0    = [0,1,2,3,4]
+    sigma = [0.3,0.3,0.8,0.2,10.0]
+    '''
+    
     nPlots=len(nn) + 2
     ncols=math.ceil(nPlots**(0.5))
     nrows=int(nPlots/ncols)+math.ceil(nPlots/ncols-int(nPlots/ncols))
     print(ncols)
     print(nrows)
     
-    nBins = 100
+    nBins = 300
     nSigma = 4
-    xMin = int(np.array(x0).min() - nSigma*np.array(sigma).max())
-    xMax = int(np.array(x0).max() + nSigma*np.array(sigma).max())
+    xMin = int(np.array(x0).min() - math.ceil(nSigma*np.array(sigma).max()))
+    xMax = int(np.array(x0).max() + math.ceil(nSigma*np.array(sigma).max()))
+    #xMin = 8
+    #xMax = 12
     bins = getHistBins(nBins,xMin,xMax)
     print(len(bins))
-    #print(xMin)
-    #print(xMax)
+    print(xMin)
+    print(xMax)
+    print(nSigma*np.array(sigma).max())
     
     data = generateHistData(nn,x0,sigma)
     datay = [classType[i]*np.ones(nn[i]) for i in range(len(x0))]
@@ -157,9 +167,9 @@ def plot_hist():
     plt.show()
     
 def main():
-    #plot_errorbar()
-    #plot_scatter()
-    #plot_subplot01()
+    plot_errorbar()
+    plot_scatter()
+    plot_subplot01()
     plot_hist()
     
 if __name__ == "__main__":
